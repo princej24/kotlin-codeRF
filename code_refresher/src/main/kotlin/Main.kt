@@ -1,14 +1,13 @@
 // Define the Player class
 data class Player(val name: String, val number: Int)
 
-// Global list to store players
+
 val players = mutableListOf<Player>()
 
 fun main() {
-    // Populate the array with 5 Players
-    populatePlayers()
 
-    // Display the menu to the user
+    Players()
+
     while (true) {
         println("\nMenu:")
         println("1. Display all players")
@@ -30,9 +29,8 @@ fun main() {
         }
     }
 }
-
-// Method to populate the array with 5 players
-fun populatePlayers() {
+ // method for players
+fun Players() {
     players.add(Player("jeff", 1))
     players.add(Player("Alice", 2))
     players.add(Player("sam", 3))
@@ -48,9 +46,9 @@ fun displayAllPlayers() {
     }
 }
 
-// Method to display players with odd numbers
+
 fun displayPlayersWithOddNumbers() {
-    println("\nPlayers with Odd Numbers:")
+    println("  \nPlayers with Odd Numbers:")
     for (player in players) {
         if (player.number % 2 != 0) {
             println("Name: ${player.name}, Number: ${player.number}")
@@ -58,29 +56,53 @@ fun displayPlayersWithOddNumbers() {
     }
 }
 
-// Method to display players with names that start with a letter entered by the user
+// players  with specific letter
 fun displayPlayersWithLetter() {
-    println("\nEnter a letter:")
-    val letter = readLine()?.takeIf { it.isNotBlank() }?.toUpperCase()?.get(0) ?: return
+    println("Enter a letter:")
+    val input = readLine()
 
-    println("\nPlayers with Names Starting with '$letter':")
-    for (player in players) {
-        if (player.name.toUpperCase().startsWith(letter)) {
-            println("Name: ${player.name}, Number: ${player.number}")
+    if (input != null && input.isNotBlank()) {
+        val letter = input[0].uppercaseChar()
+
+        println("\nPlayers with names starting with '$letter':")
+
+        for (player in players) {
+            if (player.name[0].uppercaseChar() == letter) {
+                println("Name: ${player.name}, Number: ${player.number}")
+            }
         }
+    } else {
+        println("Invalid input. Please enter a letter.")
     }
 }
 
 // Method to add a player to the list
 fun addPlayer() {
-    println("\nEnter the name of the new player:")
-    val name = readLine()?.takeIf { it.isNotBlank() } ?1: return
+    println("Enter th name of the new player:")
+    val nameInput = readLine()
 
-    println("Enter the number for the new player:")
-    val number = readLine()?.toIntOrNull() ?: return
+    if (nameInput != null && nameInput.isNotBlank()) {
+        val name = nameInput
 
-    val newPlayer = Player(name, number)
-    players.add(newPlayer)
+        println("Enter the number for the new player:")
+        val numberInput = readLine()
 
-    println("Player added: Name: ${newPlayer.name}, Number: ${newPlayer.number}")
+        if (numberInput != null) {
+            val number = numberInput.toIntOrNull()
+
+            if (number != null) {
+                val newPlayer = Player(name, number)
+                players.add(newPlayer)
+
+                println("Player added: Name: ${newPlayer.name}, Number: ${newPlayer.number}")
+            } else {
+                println("Invalid number. Please enter a valid number.")
+            }
+        } else {
+            println("Invalid input. Please enter a number.")
+        }
+    } else {
+        println("Invalid input. Please enter a name.")
+    }
 }
+
